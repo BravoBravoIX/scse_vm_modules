@@ -1,0 +1,51 @@
+scenario:
+  name: "Satellite and Ground Station Simulation"
+  description: "Simulated satellite and ground station data handling"
+  version: "1.0"
+
+instance_id: "instance_123"  # Unique ID for the scenario
+
+config_location: "/home/asset_{id}/config.yaml"  # Template for config file location
+
+controller:
+  ip: "172.168.10.18"
+  port: 5002
+  base_directory: "/home/dms/instance_123"
+
+assets:
+  - name: "Satellite 1"
+    id: "asset_1"
+    ip: "172.168.10.16"
+    port: 5000
+    base_directory: "/home/asset_1/asset_data"
+    retrieval_directories:
+      telemetry: "retrieval/telemetry"
+      images: "retrieval/images"
+    sending_directories:
+      data: "sending/data"
+    data_types:
+      - name: "telemetry"
+        frequency: 20  # in seconds
+      - name: "images"
+        frequency: 30  # in seconds
+    logging:
+      level: "INFO"
+      log_file: "/home/asset_1/asset_data/logs/satellite1_log.log"
+    config_file: "/home/asset_1/config.yaml"
+
+  - name: "Ground Station 1"
+    id: "asset_2"
+    ip: "172.168.10.17"
+    port: 5001
+    base_directory: "/home/asset_2/asset_data"
+    retrieval_directories:
+      connection_window: "retrieval/connection_window"
+    sending_directories:
+      telemetry: "sending/telemetry"
+    data_types:
+      - name: "telemetry"
+        frequency: 20  # in seconds
+    logging:
+      level: "INFO"
+      log_file: "/home/asset_2/asset_data/logs/ground_station1_log.log"
+    config_file: "/home/asset_2/config.yaml"
