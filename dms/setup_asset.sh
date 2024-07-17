@@ -1,9 +1,11 @@
 #!/bin/bash
 
+echo "Enter instance ID (e.g., instance_123):"
+read instance_id
+
 echo "Enter asset ID (1 or 2):"
 read asset_id
 
-instance_id="instance_123"
 base_directory="/home/dms/$instance_id"
 
 # Directories to be created
@@ -13,6 +15,15 @@ directories=(
     "$base_directory/asset_$asset_id/telemetry"
     "$base_directory/asset_$asset_id/images"
 )
+
+# Create instance ID directory
+mkdir -p "$base_directory"
+if [ $? -eq 0 ]; then
+    echo "Instance directory $base_directory created successfully."
+else
+    echo "Failed to create instance directory $base_directory."
+    exit 1
+fi
 
 # Create directories
 for dir in "${directories[@]}"; do
